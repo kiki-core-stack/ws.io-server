@@ -1,30 +1,30 @@
 [package]
-name = "crate-name"
-version = "0.1.0"
+name = "kiki-core-stack-ws-io-server"
+# version = "0.1.0"
 edition = "2024"
 
-description = ""
+# description = ""
 # documentation = "https://docs.rs/crate-name"
 # homepage = ""
-license = "MIT"
-readme = "./README.md"
-repository = ""
+# license = "MIT"
+# readme = "./README.md"
+# repository = ""
 
-categories = []
-keywords = []
+# categories = []
+# keywords = []
 
-include = [
-  "Cargo.toml",
-  "LICENSE*",
-  "README.md",
-  "benches/**",
-  "examples/**",
-  "src/**",
-  "tests/**",
-]
+# include = [
+#   "Cargo.toml",
+#   "LICENSE*",
+#   "README.md",
+#   "benches/**",
+#   "examples/**",
+#   "src/**",
+#   "tests/**",
+# ]
 
 # Prevent accidental publishing for private/internal crates.
-# publish = false
+publish = false
 
 # Only needed when using native linking / sys crates.
 # links = "native-library-name"
@@ -154,6 +154,23 @@ full = ["all"]
 # =============================================================================
 
 [dependencies]
+anyhow = "1.0.104"
+axum = { version = "0.8.9", default-features = false, features = ["http1", "tokio"] }
+cookie = { version = "0.18.2", features = ["percent-encode"] }
+dotenvy = "0.15.7"
+http = "1.5.0"
+is_empty = "0.3.0"
+kcs-project-pack = { package = "kiki-core-stack-pack", git = "https://github.com/kiki-core-stack/pack-rs.git", rev = "e628133affebce5d1d071af091acddf50e0a9aa8" }
+kikiutils = { version = "0.13.2", features = ["atomic-enum-cell", "fx-collections", "global-allocator", "logger", "signal", "task"] }
+mongodb = { version = "3.10.1", default-features = false, features = ["bson-3", "compat-3-3-0", "rustls-tls"] }
+redis = { version = "1.8.2", features = ["connection-manager", "tokio-comp"] }
+rmp-serde = "1.3.1"
+serde = { version = "1.0.229", features = ["derive"] }
+subtle = "2.6.1"
+tokio = { version = "1.54.1", features = ["macros", "rt-multi-thread"] }
+tokio-util = "0.7.20"
+tracing = "0.1.44"
+wsio-server = { version = "0.17.0", features = ["connection-extensions", "packet-transformer-zstd"] }
 
 # -----------------------------------------------------------------------------
 # OS / family-specific dependencies
