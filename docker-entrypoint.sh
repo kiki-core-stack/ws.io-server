@@ -13,4 +13,4 @@ if [ -d /run/secrets ]; then
 fi
 
 # Run the app
-exec ./kiki-core-stack-ws-io-server
+exec ./ws-io-server

@@ -17,6 +17,7 @@ use mongodb::{
 static DB: OnceLock<Database> = OnceLock::new();
 
 // Functions
+#[expect(dead_code, reason = "base infrastructure for downstream services")]
 pub(crate) fn get_db() -> Result<&'static Database> {
     DB.get().ok_or_else(|| anyhow!("mongodb database is not initialized"))
 }

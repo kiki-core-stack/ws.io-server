@@ -39,7 +39,7 @@ RUN --mount=type=cache,id=ws-io-server-cargo-git,target=/usr/local/cargo/git \
     cargo format && \
     CARGO_TARGET_DIR=/cargo-target cargo clippy -r --all-features --all-targets --locked -- -D warnings && \
     CARGO_TARGET_DIR=/cargo-target cargo b -r --all-features --locked && \
-    cp -p /cargo-target/release/kiki-core-stack-ws-io-server ./kiki-core-stack-ws-io-server
+    cp -p /cargo-target/release/ws-io-server ./ws-io-server
 
 # Runtime stage
 FROM debian:trixie-slim
@@ -76,5 +76,5 @@ ENV SERVER_HOST='0.0.0.0' \
     SERVER_PORT=8080
 
 ## Copy application output and runtime configuration
-COPY --chown=10001:nogroup --from=build-stage /app/kiki-core-stack-ws-io-server ./
+COPY --chown=10001:nogroup --from=build-stage /app/ws-io-server ./
 COPY --chown=10001:nogroup ./.env.production.local ./

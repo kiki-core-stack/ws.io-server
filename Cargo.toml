@@ -347,9 +347,9 @@ wsio-server = { version = "0.17.0", features = ["connection-extensions", "packet
 # doctest = true
 
 # Usually not needed if using the default `src/main.rs`.
-# [[bin]]
-# name = "crate-name"
-# path = "src/main.rs"
+[[bin]]
+name = "ws-io-server"
+path = "src/main.rs"
 # required-features = []
 
 # [[example]]

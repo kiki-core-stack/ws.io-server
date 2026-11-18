@@ -17,6 +17,7 @@ use redis::{
 static REDIS_CONNECTION_MANAGER: OnceLock<ConnectionManager> = OnceLock::new();
 
 // Functions
+#[expect(dead_code, reason = "base infrastructure for downstream services")]
 pub(crate) fn get_redis() -> Result<ConnectionManager> {
     REDIS_CONNECTION_MANAGER
         .get()

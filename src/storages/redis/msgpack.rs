@@ -8,9 +8,11 @@ use serde::de::DeserializeOwned;
 use crate::clients::redis::get_redis;
 
 // Structs
+#[expect(dead_code, reason = "base infrastructure for downstream services")]
 pub(crate) struct RedisMsgpackStorage;
 
 impl RedisMsgpackStorage {
+    #[expect(dead_code, reason = "base infrastructure for downstream services")]
     pub(crate) async fn get_item<T: DeserializeOwned>(key: &str) -> Result<Option<T>> {
         let raw_value: Option<Vec<u8>> = get_redis()?.get(key).await?;
         raw_value
