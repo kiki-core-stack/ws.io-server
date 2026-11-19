@@ -56,12 +56,7 @@ pub(crate) async fn authenticate_frontend_connection(
         .get("origin")
         .and_then(|origin| origin.to_str().ok());
 
-    if !origin.is_some_and(|origin| {
-        realm
-            .allowed_origins()
-            .iter()
-            .any(|allowed_origin| allowed_origin == origin)
-    }) {
+    if origin != Some(realm.origin()) {
         connection.disconnect().await;
         bail!("origin is not allowed");
     }

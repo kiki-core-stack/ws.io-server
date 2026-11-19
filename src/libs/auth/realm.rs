@@ -29,7 +29,7 @@ use crate::{
 };
 
 // Constants/Statics
-static ADMIN_AUTH_ORIGINS: LazyLock<Vec<String>> = LazyLock::new(|| load_auth_origins("ADMIN_AUTH_ORIGINS"));
+static ADMIN_AUTH_ORIGIN: LazyLock<String> = LazyLock::new(|| load_auth_origin("ADMIN_AUTH_ORIGIN"));
 
 // Enums
 
@@ -53,9 +53,9 @@ impl AuthRealm {
     }
 
     // Public methods
-    pub(super) fn allowed_origins(self) -> &'static [String] {
+    pub(super) fn origin(self) -> &'static str {
         match self {
-            Self::Admin => &ADMIN_AUTH_ORIGINS,
+            Self::Admin => &ADMIN_AUTH_ORIGIN,
         }
     }
 
@@ -101,22 +101,13 @@ pub(super) struct ValidatedAuthSession {
 
 // Functions
 
-/// Loads the origins of every realm, so that a missing one fails at startup.
+/// Loads the origin of every realm, so that a missing one fails at startup.
 pub(crate) fn init_auth_origins() {
-    LazyLock::force(&ADMIN_AUTH_ORIGINS);
+    LazyLock::force(&ADMIN_AUTH_ORIGIN);
 }
 
-fn load_auth_origins(env_name: &str) -> Vec<String> {
-    let origins: Vec<String> = env::var(env_name)
-        .unwrap_or_else(|_| panic!("{env_name} is not set"))
-        .split(',')
-        .map(str::trim)
-        .filter(|origin| !origin.is_empty())
-        .map(str::to_owned)
-        .collect();
-
-    assert!(!origins.is_empty(), "{env_name} requires at least one origin");
-    origins
+fn load_auth_origin(env_name: &str) -> String {
+    env::var(env_name).unwrap_or_else(|_| panic!("{env_name} is not set"))
 }
 
 /// `None` means the backend rejected the session (any 4xx); other failures are
