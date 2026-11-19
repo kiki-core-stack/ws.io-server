@@ -159,6 +159,7 @@ axum = { version = "0.8.9", default-features = false, features = ["http1", "toki
 cookie = { version = "0.18.2", features = ["percent-encode"] }
 dotenvy = "0.15.7"
 http = "1.5.0"
+ipnet = "2.12.2"
 is_empty = "0.3.0"
 kcs-project-pack = { package = "kiki-core-stack-pack", git = "https://github.com/kiki-core-stack/pack-rs.git", rev = "e628133affebce5d1d071af091acddf50e0a9aa8" }
 kikiutils = { version = "0.13.2", features = ["atomic-enum-cell", "fx-collections", "global-allocator", "logger", "signal", "task"] }

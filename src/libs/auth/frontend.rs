@@ -70,7 +70,7 @@ pub(crate) async fn authenticate_frontend_connection(
         bail!("client IP is missing");
     };
 
-    let session = match validate_auth_session(realm, &token, client_ip).await {
+    let session = match validate_auth_session(realm, &token, &client_ip.to_string()).await {
         Ok(Some(session)) => session,
         Ok(None) => {
             connection.disconnect().await;
@@ -91,7 +91,7 @@ pub(crate) async fn authenticate_frontend_connection(
     };
 
     Ok(Some(AuthenticatedFrontendSession {
-        client_ip: client_ip.to_owned(),
+        client_ip: client_ip.to_string(),
         principal_id: ObjectId::parse_str(session.principal_id)
             .context("invalid principal id returned by authentication service")?,
         session_id: session.session_id,
