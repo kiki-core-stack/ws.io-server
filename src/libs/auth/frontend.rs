@@ -84,6 +84,7 @@ pub(crate) async fn authenticate_frontend_connection(
         Err(error) => {
             // wsio-server does not log middleware errors, so the reason is recorded here.
             tracing::warn!(
+                component = "auth",
                 realm = realm.as_str(),
                 connection_id = %connection.id(),
                 error = format!("{error:#}"),
@@ -128,6 +129,7 @@ pub(crate) async fn handle_auth_sessions_revoked(
         .await
     {
         tracing::warn!(
+            component = "auth",
             event = "auth_sessions_revoked",
             realm = realm.as_str(),
             principal_id = %principal_id,
@@ -138,6 +140,7 @@ pub(crate) async fn handle_auth_sessions_revoked(
 
     if let Err(error) = broadcast_operator.disconnect().await {
         tracing::warn!(
+            component = "auth",
             event = "auth_sessions_revoked",
             realm = realm.as_str(),
             principal_id = %principal_id,
@@ -173,6 +176,7 @@ pub(crate) fn start_authenticated_frontend_session(
         .context("auth session extension is missing")?;
 
     tracing::debug!(
+        component = "auth",
         realm = realm.as_str(),
         connection_id = %connection.id(),
         principal_id = %session.principal_id,
@@ -213,6 +217,7 @@ fn start_frontend_session_revalidation(
                 },
                 Err(error) => {
                     tracing::warn!(
+                        component = "auth",
                         realm = realm.as_str(),
                         connection_id = %connection_clone.id(),
                         error = format!("{error:#}"),

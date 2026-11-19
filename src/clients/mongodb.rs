@@ -35,6 +35,6 @@ pub(crate) async fn init_mongodb() -> Result<()> {
     DB.set(db)
         .map_err(|_| anyhow!("mongodb database is already initialized"))?;
 
-    tracing::info!("mongodb initialized");
+    tracing::info!(component = "mongodb", "initialized");
     Ok(())
 }

@@ -37,6 +37,6 @@ pub(crate) async fn init_redis() -> Result<()> {
         .set(connection_manager)
         .map_err(|_| anyhow!("redis connection manager is already initialized"))?;
 
-    tracing::info!("redis initialized");
+    tracing::info!(component = "redis", "initialized");
     Ok(())
 }

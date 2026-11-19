@@ -17,7 +17,11 @@ pub(crate) static WS_IO_SERVER: LazyLock<WsIoServer> = LazyLock::new(|| {
 pub(crate) fn init_ws_io_and_get_tower_layer() -> WsIoServerLayer {
     namespaces::ADMIN_FRONTEND.path();
     namespaces::MANAGEMENT_BACKEND.path();
-    tracing::info!(namespace_count = WS_IO_SERVER.namespace_count(), "ws.io initialized");
+    tracing::info!(
+        component = "ws.io",
+        namespace_count = WS_IO_SERVER.namespace_count(),
+        "initialized"
+    );
 
     WS_IO_SERVER.layer()
 }
