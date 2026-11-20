@@ -24,9 +24,8 @@ docker-build-and-run.sh
 docker-run.sh
 Dockerfile
 
-# dotenv environment variable files
-.env.development
-.env.production
+# dotenv environment variable files; production configuration comes from the container environment
+.env*
 
 # Git
 .git/

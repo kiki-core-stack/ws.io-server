@@ -75,6 +75,5 @@ CMD ["./docker-entrypoint.sh"]
 ENV SERVER_HOST='0.0.0.0' \
     SERVER_PORT=8080
 
-## Copy application output and runtime configuration
+## Copy the application output
 COPY --chown=10001:nogroup --from=build-stage /app/ws-io-server ./
-COPY --chown=10001:nogroup ./.env.production.local ./

@@ -56,16 +56,6 @@ static APP_TASK_MANAGER: LazyLock<TaskManager> = LazyLock::new(TaskManager::new)
 static GLOBAL: GlobalAllocator = GlobalAllocator;
 
 // Functions
-fn load_env_by_mode() -> Result<()> {
-    #[cfg(debug_assertions)]
-    from_filename("./.env.development.local").context("failed to load development environment file")?;
-
-    #[cfg(not(debug_assertions))]
-    from_filename("./.env.production.local").context("failed to load production environment file")?;
-
-    Ok(())
-}
-
 fn shutdown() {
     APP_SHUTDOWN_TOKEN.cancel();
 }
@@ -94,8 +84,10 @@ async fn start_server(cancel_token: CancellationToken) -> Result<()> {
 // Main
 #[tokio::main]
 async fn main() -> Result<()> {
-    // 載入環境變數檔
-    load_env_by_mode()?;
+    // 開發時載入環境變數檔；正式環境由容器的環境變數提供
+    if cfg!(debug_assertions) {
+        from_filename("./.env.development.local").context("failed to load development environment file")?;
+    }
 
     // 初始化 logger
     let _logger_guard = init_logger(LoggerInitOptions::from_env()?).context("failed to initialize logger")?;
