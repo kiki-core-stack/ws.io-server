@@ -31,8 +31,6 @@ mod clients;
 mod collections;
 mod libs;
 mod namespaces;
-mod redis_scripts;
-mod storages;
 mod utils;
 mod ws_io;
 
