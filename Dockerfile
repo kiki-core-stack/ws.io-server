@@ -21,7 +21,7 @@ COPY ./Cargo.lock ./Cargo.toml ./
 ## Release-mode dependencies are reused by the subsequent lint and build steps
 RUN --mount=type=cache,id=ws-io-server-cargo-git,target=/usr/local/cargo/git \
     --mount=type=cache,id=ws-io-server-cargo-registry,target=/usr/local/cargo/registry \
-    --mount=type=cache,id=ws-io-server-target,target=/cargo-target \
+    --mount=type=cache,id=ws-io-server-target,sharing=locked,target=/cargo-target \
     mkdir ./src && \
     echo 'fn main() {}' >./src/main.rs && \
     CARGO_TARGET_DIR=/cargo-target cargo b -r --all-features --all-targets --locked && \
@@ -34,7 +34,7 @@ COPY ./src ./src
 ## Validate and build the application
 RUN --mount=type=cache,id=ws-io-server-cargo-git,target=/usr/local/cargo/git \
     --mount=type=cache,id=ws-io-server-cargo-registry,target=/usr/local/cargo/registry \
-    --mount=type=cache,id=ws-io-server-target,target=/cargo-target \
+    --mount=type=cache,id=ws-io-server-target,sharing=locked,target=/cargo-target \
     touch ./src/main.rs && \
     cargo format && \
     CARGO_TARGET_DIR=/cargo-target cargo clippy -r --all-features --all-targets --locked -- -D warnings && \
