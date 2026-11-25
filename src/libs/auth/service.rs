@@ -15,6 +15,7 @@ use wsio_server::connection::WsIoServerConnection;
 
 // Constants/Statics
 static MANAGEMENT_BACKEND_AUTH_KEY: LazyLock<String> = LazyLock::new(|| load_auth_key("MANAGEMENT_BACKEND_AUTH_KEY"));
+static OPS_WORKERS_TS_AUTH_KEY: LazyLock<String> = LazyLock::new(|| load_auth_key("OPS_WORKERS_TS_AUTH_KEY"));
 
 // Enums
 
@@ -22,6 +23,7 @@ static MANAGEMENT_BACKEND_AUTH_KEY: LazyLock<String> = LazyLock::new(|| load_aut
 #[derive(Debug, Clone, Copy)]
 pub(crate) enum InternalService {
     ManagementBackend,
+    OpsWorkersTs,
 }
 
 impl InternalService {
@@ -29,6 +31,7 @@ impl InternalService {
     fn auth_key(self) -> &'static str {
         match self {
             Self::ManagementBackend => &MANAGEMENT_BACKEND_AUTH_KEY,
+            Self::OpsWorkersTs => &OPS_WORKERS_TS_AUTH_KEY,
         }
     }
 
@@ -36,6 +39,7 @@ impl InternalService {
     pub(crate) const fn as_str(self) -> &'static str {
         match self {
             Self::ManagementBackend => "management-backend",
+            Self::OpsWorkersTs => "ops-workers-ts",
         }
     }
 }
@@ -57,6 +61,7 @@ pub(crate) async fn authorize_service_connection(
 /// Loads every auth key, so that a missing one fails at startup.
 pub(crate) fn init_service_auth_keys() {
     LazyLock::force(&MANAGEMENT_BACKEND_AUTH_KEY);
+    LazyLock::force(&OPS_WORKERS_TS_AUTH_KEY);
 }
 
 fn load_auth_key(env_name: &str) -> String {
